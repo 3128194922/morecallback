@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.morecallback.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "morecallback.refmap.json",
+  "mixins": [
+    "ApothicAttributeEventsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
