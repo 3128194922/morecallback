@@ -83,6 +83,13 @@ ForgeEvents.onEvent('com.morecallback.event.ApothicDodgeEvent', event => {
   const attackEntity = event.getAttackEntity()
   console.log(`目标成功闪避，是否为远程攻击：${event.isProjectile()}`)
 })
+
+ForgeEvents.onEvent('com.morecallback.event.CanBeAffectedEvent', event => {
+  if (event.getEntityTypeId() === 'cataclysm:the_harbinger'
+      && event.getEffectId() === 'minecraft:poison') {
+    event.setForceAllowed(true)
+  }
+})
 ```
 
 ## 事件 API
@@ -120,7 +127,15 @@ ForgeEvents.onEvent('com.morecallback.event.ApothicDodgeEvent', event => {
 | `getAttackEntity()` | `Entity` | 近战攻击实体或远程投射物 |
 | `isProjectile()` | `boolean` | 是否为远程投射物攻击 |
 
-这些事件是通知事件，不用于取消或修改原始攻击结果。
+### `CanBeAffectedEvent`
+
+完整类名：`com.morecallback.event.CanBeAffectedEvent`
+
+事件会在实体尝试添加药水效果时触发，即使实体自身的 `canBeAffected` 返回 `false`，也可以通过 `setForceAllowed(true)` 强制允许。
+
+可用方法：`getEntity()`、`getEffectInstance()`、`getEntityTypeId()`、`getEffectId()`、`isOriginalAllowed()`、`isForceAllowed()`、`setForceAllowed(boolean)`
+
+前三个战斗事件是通知事件，不用于取消或修改原始攻击结果；`CanBeAffectedEvent` 可以通过 `setForceAllowed(true)` 修改本次药水效果判定。
 
 ## 开发构建
 
